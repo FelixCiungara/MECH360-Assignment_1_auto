@@ -1,0 +1,164 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{xfp}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{xparse}
+\usepackage{gensymb}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{MECH 360: Principles of Manufacturing}}
+\fancyhead[R]{\textbf{Homework 1}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{15pt}
+
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+
+    \vspace*{1.5cm}
+    {\large McGill University}\\[0.4em]
+    {\large Department of Mechanical Engineering}\\[2em]
+    \vfill
+    \includegraphics[width=4.2in]{mcgill_sig_red.pdf}\\[2em]
+    \vfill
+    {\large \textbf{MECH 360: Principles of Manufacturing}} \\[0.3em]
+    {\large \textbf{Homerwork 1}}\\[1.2em]
+    {\Large \textbf{Numerical Errors and Floating-Point Arithmetic}}\\[2em]
+    \vfill
+    \textbf{Name:} Félix Ciungara\\[0.5em]
+    \textbf{Student ID:} 261292776\\[0.5em]
+
+    \vfill
+    October 8, 2026
+
+\end{titlepage}
+
+\clearpage
+\setcounter{page}{1}
+
+\section*{Question 1}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
+\item 
+\textbf{Cutting Force:} During up milling, the cutter moves against the feed direction. The chips produced start thin and get thicker as the blade progresses through the material. As a result, the force produced by each blade starts small and increases as the blade moves through the material. The force pulls the work piece upwards.
+
+During down milling, the cutter moves with the feed direction. The chips produced start thick and get thinner as the blade progresses through the material. As a result, the force produced by each blade starts large and decreases as the blade moves through the material. The force pulls the work piece downwards.
+
+\textbf{Tool Wear:} During up milling, each tooth gradually gets deeper into the material. During the first instants, the teeth don't dig in at all, they just rub over the work piece before finally digging in. During this rubbing phase, the cutter gets worn down.
+
+During down milling, the teeth engage in the cutting right from the start, avoiding unnecessary wear.
+
+\textbf{Surface Finish:} During up milling, the initial part of the movement where the teeth rub over the surface without meaningfully digging in can produce an uneven finish on the surface. Additionally, as the cutting force is oriented upwards, if the work piece is not solidly secured, it could move or vibrate during the milling
+
+During down milling, the cutter engages the piece at the maximum chip thickness, which allows for clean shearing at the beginning of the cut. Additionally, the cutting force is oriented downwards, which provides more stability to the work piece.
+
+\item Thermosets needs a finely tuned temperature when filling the mould as to make sure that the material doesn't start cross-linking before having fully filled the mould. The mould also has to allow the curing reaction to occur, during which temperature and pressure must be controlled, it cannot simply be taken out of its mould right after cooling down, like you would do with a normal thermoplastic
+
+
+\item Coolants are used to remove heat during a machining process, then absorb heat and carry it away from the cutting zone. This prevents overheating, which could make the material expand, making measurements inaccurate. Lower temperatures also prolong the life of the cutting tools.
+
+Lubricants are used to reduce friction during cutting, by forming a thin film between the tool and the work piece and chip. This reduces tool wear and improves surface finish.
+
+\item TBD
+\item TBD
+
+\end{enumerate}
+
+\clearpage
+
+\section*{Question 2}
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
+
+\item a
+\edef\shearAngle{\fpeval{atand((0.5 * cosd(8)) / (1 - 0.5 * sind(8)))}}
+\[
+\begin{aligned}
+\tan{\phi} &= \frac{r \cos \alpha}{1 - r \sin \alpha}\\
+\phi &= \arctan \left(\frac{0.5 \cos( \ang{8})}{1-0.5 \sin( \ang{8})}\right)\\
+\phi &= \ang[round-mode=places, round-precision=3]{\shearAngle}
+\end{aligned}
+\]
+
+
+\edef\shearArea{\fpeval{(0.25 * 2.5) / sind(\shearAngle)}}
+$ A_s = \frac{t_0 \cdot w}{\sin \phi} = \frac{\qty{0.25}{mm} \cdot \qty{2.5}{mm}}{\sin \ang[round-mode=places, round-precision=3]{\shearAngle}} = \qty[round-mode=places, round-precision=3]{\shearArea}{mm^2}$
+
+\edef\shearForce{\fpeval{200 * \shearArea}}
+$ F_s = \tau \cdot A_s = \qty{200}{MPa} \cdot \qty[round-mode=places, round-precision=3]{\shearArea}{mm^2} \approx \boxed{\qty[round-mode=places, round-precision=3]{\shearForce}{N}}$
+
+$ \phi = \ang{45} + \frac{\alpha}{2} - \frac{\beta}{2} $
+
+\edef\angleBeta{\fpeval{2*(45 + 8/2 - \shearAngle)}}
+$ \beta = 2 \cdot \left(45 + \frac{\alpha}{2} - \phi \right) = \ang[round-mode=places, round-precision=3]{\angleBeta}$
+
+$ F_s = R \cos (\phi + \beta - \alpha) \iff R = \frac{F_s}{\cos (\phi + \beta - \alpha)} $
+
+and
+
+
+\edef\cuttingForce{\fpeval{\shearForce * cosd(\angleBeta - 8) / cosd(\shearAngle + \angleBeta - 8)}}
+$ F_c = R \cos (\beta - \alpha) = F_s \cdot \frac{\cos (\beta - \alpha)}{\cos (\phi + \beta - \alpha)} = \qty[round-mode=places, round-precision=3]{\shearForce}{N} \cdot \frac{\cos (\ang[round-mode=places, round-precision=3]{\angleBeta} - \ang{8})}{\cos (\ang[round-mode=places, round-precision=3]{\shearAngle} + \ang[round-mode=places, round-precision=3]{\angleBeta} - \ang{8})} = \qty[round-mode=places, round-precision=3]{\cuttingForce}{N}$ 
+
+
+\edef\thrustForce{\fpeval{\shearForce * sind(\angleBeta - 8) / cosd(\shearAngle + \angleBeta - 8)}}
+$ F_t = R \sin (\beta - \alpha) = F_s \cdot \frac{\sin (\beta - \alpha)}{\cos (\phi + \beta - \alpha)} = \qty[round-mode=places, round-precision=3]{\thrustForce}{\frac{mm^3}{min}}$
+
+\item TBD
+\end{enumerate}
+\clearpage
+
+\section*{Question 3}
+
+
+
+\clearpage
+
+\section*{Question 4}
+
+
+\edef\MRRmin{\fpeval{pi/4 * 10^2 *0.2 * 800}}
+\edef\MRR{\fpeval{\MRRmin/60}}
+$ \text{MRR} = A \cdot v = \frac{\pi}{4} \cdot d^2 \cdot f \cdot N = \frac{\pi}{4} \cdot (\qty{10}{mm})^2 \cdot \qty{0.2}{\frac{mm}{rev}} \cdot \qty{800}{\frac{rev}{min}} = \qty[round-mode=places, round-precision=3]{\MRRmin}{\frac{mm^3}{min}} = \qty[round-mode=places, round-precision=3]{\MRR}{\frac{mm^3}{s}}$
+
+
+\edef\Torque{\fpeval{(0.5 * \MRR / (2 * pi * 800 / 60)}}
+$ P = 2 \pi N T \iff T = \frac{P}{2 \pi N} = \frac{u_t \cdot \text{MRR}}{2 \pi N} = \frac{\qty{0.5}{\frac{W \cdot s}{mm^3}} \cdot \qty[round-mode=places, round-precision=3]{\MRR}{\frac{mm^3}{s}}}{1 \pi \qty{}{\frac{rad}{rev}} \cdot \qty{800}{\frac{rev}{min}} \times \frac{\qty{1}{min}}{\qty{60}{s}}} = \qty[round-mode=places, round-precision=3]{\Torque}{Nm}$
+
+
+
+\clearpage
+
+\section*{Question 5}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
+\item
+\item TBD
+\item a
+$R_a = \frac{1}{N} \sum\limits_{i = 1}^{N} |d_i|$
+
+\begin{align*}
+R_a &= \frac{1}{n} \sum_{i=1}^{n} |y_i| \\[0.5em]
+&= \frac{1}{15} \left( |168| + |200| + |220| + |225| + |190| + |-160| + |-150| \right. \\
+&\quad \left. + |-170| + |-140| + |-120| + |330| + |380| + |400| + |360| + |320| \right) \text{nm} \\[0.5em]
+&= \frac{1}{15} \left( 168 + 200 + 220 + 225 + 190 + 160 + 150 + 170 + 140 + 120 + 330 + 380 + 400 + 360 + 320 \right) \text{ nm} \\[0.5em]
+&= \frac{3533}{15} \text{ nm} \approx 235.53 \text{ nm} 
+\end{align*}
+
+a
+
+\end{enumerate}
+
+
+\end{document}
