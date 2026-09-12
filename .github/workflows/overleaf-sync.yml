@@ -1,10 +1,7 @@
 name: Overleaf Sync
 
-# Runs on every push to GitHub, on a schedule, and can be triggered manually
+# Runs on a schedule, and can be triggered manually
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: "*/5 * * * *"   # every 5 minutes — GitHub Actions' practical minimum
   workflow_dispatch:
