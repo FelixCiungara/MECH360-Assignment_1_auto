@@ -133,7 +133,7 @@ $ F_t = R \sin (\beta - \alpha) = F_s \cdot \frac{\sin (\beta - \alpha)}{\cos (\
 $ \text{MRR} = A \cdot v = \frac{\pi}{4} \cdot d^2 \cdot f \cdot N = \frac{\pi}{4} \cdot (\qty{10}{mm})^2 \cdot \qty{0.2}{\frac{mm}{rev}} \cdot \qty{800}{\frac{rev}{min}} = \qty[round-mode=places, round-precision=3]{\MRRmin}{\frac{mm^3}{min}} = \qty[round-mode=places, round-precision=3]{\MRR}{\frac{mm^3}{s}}$
 
 
-\edef\Torque{\fpeval{(0.5 * \MRR / (2 * pi * 800 / 60)}}
+\edef\Torque{\fpeval{0.5 * \MRR / (2 * pi * 800 / 60)}}
 $ P = 2 \pi N T \iff T = \frac{P}{2 \pi N} = \frac{u_t \cdot \text{MRR}}{2 \pi N} = \frac{\qty{0.5}{\frac{W \cdot s}{mm^3}} \cdot \qty[round-mode=places, round-precision=3]{\MRR}{\frac{mm^3}{s}}}{1 \pi \qty{}{\frac{rad}{rev}} \cdot \qty{800}{\frac{rev}{min}} \times \frac{\qty{1}{min}}{\qty{60}{s}}} = \qty[round-mode=places, round-precision=3]{\Torque}{Nm}$
 
 
