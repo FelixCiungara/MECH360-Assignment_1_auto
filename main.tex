@@ -145,18 +145,36 @@ $ P = 2 \pi N T \iff T = \frac{P}{2 \pi N} = \frac{u_t \cdot \text{MRR}}{2 \pi N
 \begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
 \item
 \item TBD
-\item a
-$R_a = \frac{1}{N} \sum\limits_{i = 1}^{N} |d_i|$
-
+\item 
 \begin{align*}
-R_a &= \frac{1}{n} \sum_{i=1}^{n} |y_i| \\[0.5em]
-&= \frac{1}{15} \left( |168| + |200| + |220| + |225| + |190| + |-160| + |-150| \right. \\
-&\quad \left. + |-170| + |-140| + |-120| + |330| + |380| + |400| + |360| + |320| \right) \text{nm} \\[0.5em]
-&= \frac{1}{15} \left( 168 + 200 + 220 + 225 + 190 + 160 + 150 + 170 + 140 + 120 + 330 + 380 + 400 + 360 + 320 \right) \text{ nm} \\[0.5em]
-&= \frac{3533}{15} \text{ nm} \approx 235.53 \text{ nm} 
+    R_a &= \frac{1}{N} \sum\limits_{i = 1}^{N} |d_i|\\
+        &= \frac{1}{15}\Big(
+            \begin{aligned}[t]
+                &|168|+|200|+|220|+|225|+|190|\\
+                &+|-160|+|-150|+|-170|+|-140|+|-120|\\
+                &+|330|+|380|+|400|+|360|+|320|
+            \end{aligned}
+        \Big)\\
+        &= \frac{3533}{15} \\
+        &= 235.533\,.
 \end{align*}
 
-a
+\begin{align*}
+    \text{RMS} &= \sqrt{\frac{1}{N} \sum\limits_{i = 1}^{N} d_i^2}\\
+               &= \sqrt{\frac{1}{15}\Big(
+                    \begin{aligned}[t]
+                        &168^2+200^2+220^2+225^2+190^2\\
+                        &+(-160)^2+(-150)^2+(-170)^2+(-140)^2+(-120)^2\\
+                        &+330^2+380^2+400^2+360^2+320^2
+                    \end{aligned}
+                \Big)}\\
+               &= \sqrt{\frac{959649}{15}}\\
+               &= \sqrt{63976.6}\\
+               &= 252.94\,.
+\end{align*}
+
+
+% (placeholder removed)
 
 \end{enumerate}
 
