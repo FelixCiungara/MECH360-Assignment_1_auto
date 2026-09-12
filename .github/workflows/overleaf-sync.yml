@@ -9,6 +9,11 @@ on:
     - cron: "*/5 * * * *"   # every 5 minutes — GitHub Actions' practical minimum
   workflow_dispatch:
 
+# Prevent overlapping runs from racing each other and rejecting one another's push
+concurrency:
+  group: overleaf-sync
+  cancel-in-progress: false
+
 jobs:
   sync-overleaf:
     runs-on: ubuntu-latest
@@ -32,7 +37,9 @@ jobs:
         run: git pull --rebase overleaf main
 
       - name: Push merged result back to GitHub
-        run: git push origin main
+        run: |
+          git pull --rebase origin main || true
+          git push origin main
 
       - name: Push merged result back to Overleaf
         run: git push overleaf HEAD:main
