@@ -42,4 +42,4 @@ jobs:
           git push origin main
 
       - name: Push merged result back to Overleaf
-        run: git push overleaf HEAD:main
+        run: git push overleaf HEAD:main --force
