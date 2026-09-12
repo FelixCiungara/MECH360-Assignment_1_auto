@@ -1,0 +1,38 @@
+name: Overleaf Sync
+
+# Runs on every push to GitHub, on a schedule, and can be triggered manually
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes — GitHub Actions' practical minimum
+  workflow_dispatch:
+
+jobs:
+  sync-overleaf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # full history so rebase against Overleaf works cleanly
+          ref: main
+
+      - name: Configure git identity
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "Overleaf Sync Bot"
+
+      - name: Add Overleaf remote
+        run: |
+          git remote add overleaf https://git:${{ secrets.OVERLEAF_GIT_TOKEN }}@git.overleaf.com/${{ secrets.OVERLEAF_PROJECT_ID }}
+
+      - name: Pull latest from Overleaf
+        run: git pull --rebase overleaf main
+
+      - name: Push merged result back to GitHub
+        run: git push origin main
+
+      - name: Push merged result back to Overleaf
+        run: git push overleaf HEAD:main
