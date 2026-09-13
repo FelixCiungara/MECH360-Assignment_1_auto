@@ -11,6 +11,7 @@
 \usepackage{xcolor}
 \usepackage{xparse}
 \usepackage{gensymb}
+\usepackage{tikz}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -143,8 +144,7 @@ $ P = 2 \pi N T \iff T = \frac{P}{2 \pi N} = \frac{u_t \cdot \text{MRR}}{2 \pi N
 \section*{Question 5}
 
 \begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
-\item
-\item TBD
+\item I would use a micrometer. To ensure accuracy, i would make multiple measurements at multiples points on the paper. Additionally, I could use the micrometer, to measure the thickness of multiple sheets of paper stacked together, this way, the absolute error remains the same as when measuring one sheet, but as you divide the measurement by the number of sheets used, the absolute error also gets divided. I would however need to make sure to not excessively compress the sheets of paper during the measurement. to do so, I would make sure to use the ratchet when tightening the micrometer around the paper.
 \item 
 \begin{align*}
     R_a &= \frac{1}{N} \sum\limits_{i = 1}^{N} |d_i|\\
@@ -179,4 +179,131 @@ $ P = 2 \pi N T \iff T = \frac{P}{2 \pi N} = \frac{u_t \cdot \text{MRR}}{2 \pi N
 \end{enumerate}
 
 
+\clearpage
+
+\section*{Question 6}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
+\item a
+
+\begin{tikzpicture}[scale=1.2, >=stealth]
+
+% --- Stock ---
+\draw[thick] (0,0) rectangle (5,5);
+
+% --- Coordinate axes ---
+\draw[->] (0,0) -- (5.5,0) node[right] {$X$};
+\draw[->] (0,0) -- (0,5.5) node[above] {$Y$};
+
+% --- Dimensions ---
+\draw[<->] (0,-0.35) -- (5,-0.35)
+    node[midway, below] {$5''$};
+
+\draw[<->] (-0.35,0) -- (-0.35,5)
+    node[midway, left] {$5''$};
+
+% =========================================================
+% LEFT CIRCULAR TOOLPATH
+% N25: move to (1.5,3.5)
+% N35: G02 X1.5 Y3.5 I0.25 J0
+% =========================================================
+
+% Center of arc
+\fill (1.75,3.5) circle (1.5pt);
+
+% Starting point
+\fill[red] (1.5,3.5) circle (2pt);
+
+% Clockwise circle
+\draw[->, thick]
+    (1.5,3.5)
+    arc[start angle=180,end angle=-180,radius=0.25];
+
+% Label
+\node[above] at (1.5,3.5) {$(1.5,3.5)$};
+\node[right] at (1.75,3.5) {$R=0.25''$};
+
+% =========================================================
+% RIGHT CIRCULAR TOOLPATH
+% N45: move to (3.5,3.5)
+% N55: G02 X3.5 Y3.5 I0.25 J0
+% =========================================================
+
+% Center
+\fill (3.75,3.5) circle (1.5pt);
+
+% Starting point
+\fill[red] (3.5,3.5) circle (2pt);
+
+% Clockwise circle
+\draw[->, thick]
+    (3.5,3.5)
+    arc[start angle=180,end angle=-180,radius=0.25];
+
+% Label
+\node[above] at (3.5,3.5) {$(3.5,3.5)$};
+
+% =========================================================
+% RECTANGULAR TOOLPATH
+% N65: move to (1.5,1.5)
+% N75: X3.5 Y1.5
+% N80: X3.5 Y1.0
+% N85: X1.5 Y1.0
+% N90: X1.5 Y1.5
+% =========================================================
+
+% Start point
+\fill[red] (1.5,1.5) circle (2pt);
+
+% Toolpath
+\draw[->, thick]
+    (1.5,1.5) -- (3.5,1.5)
+    -- (3.5,1.0)
+    -- (1.5,1.0)
+    -- (1.5,1.5);
+
+% Dimensions of rectangular path
+\draw[<->] (1.5,0.75) -- (3.5,0.75)
+    node[midway, below] {$2''$};
+
+\draw[<->] (3.8,1.0) -- (3.8,1.5)
+    node[midway, right] {$0.5''$};
+
+% =========================================================
+% HOME POSITION
+% N100: G00 X0 Y0
+% =========================================================
+
+\fill (0,0) circle (1.5pt);
+\node[below left] at (0,0) {$(0,0)$};
+
+% =========================================================
+% LEGEND
+% =========================================================
+
+\draw[thick,->] (0.5,5.8) -- (1.2,5.8)
+    node[right] {Cutting direction};
+
+\fill[red] (2.8,5.8) circle (2pt)
+    node[right] {Start point};
+
+\end{tikzpicture}
+
+
+
+\end{enumerate}
+
+
+\clearpage
+
+\section*{Question 7}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
+\item a
+\edef\pLamp{\fp}
+$ p_\text{lamp} = \frac{\rho h C_p}{a t_\text{heat}} \Delta T = \frac{\qty{1200}{\frac{kg}{m^3}} \cdot \qty{0.0005}{m} \cdot \qty{1200}{\frac{J}{kg \cdot K}}}{0.8 \cdot \qty{2}{s}} \cdot \qty{250}{K} =  $
+
+\item b
+\end{enumerate}
+\clearpage
 \end{document}
