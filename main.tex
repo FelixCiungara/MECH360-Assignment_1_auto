@@ -122,8 +122,22 @@ $ F_t = R \sin (\beta - \alpha) = F_s \cdot \frac{\sin (\beta - \alpha)}{\cos (\
 
 \section*{Question 3}
 
+$$T = C \cdot v^a \cdot f^b$$
+\edef\fChange{\fpeval{(1/2)^(0.20/0.125)}}
+\begin{align*}
+    T_1 &= T_2\\
+    Cv_1^a f_1^b &= C v_2^a f_2^b\\
+    v_1^a f_1^b &= v_2^a f_2^b\\
+    \left(\frac{f_2}{f_1}\right)^b &= \left(\frac{v_1}{v_2}\right)^a\\
+    \frac{f_2}{f_1} &= \left(\frac{v_1}{v_2}\right)^\frac{a}{b}\\
+    \frac{f_2}{f_1} &= \left(\frac{v_1}{2v_1}\right)^\frac{0.20}{0.125}\\
+    \frac{f_2}{f_1} &= \left(\frac{11}{2}\right)^\frac{0.20}{0.125}\\
+    \frac{f_2}{f_1} &= \qty[round-mode=places, round-precision=3]{\fChange}{}
+\end{align*}
+\edef\percentf{\fpeval{(\fChange - 1) * 100}}
+$ \text{Percent Change} = \frac{f_2 - f_1}{f_1} = \frac{\qty[round-mode=places, round-precision=3]{\fChange}{}f_1 - f_1}{f-1} = \qty[round-mode=places, round-precision=1]{\percentf}{\%}$
 
-
+In order to keep the mean temperature constant when the cutting speed is doubled, the feed rate should be decreased by $\qty[round-mode=places, round-precision=1]{\fpeval{-\percentf}}{\%}$
 \clearpage
 
 \section*{Question 4}
@@ -299,11 +313,12 @@ $ P = 2 \pi N T \iff T = \frac{P}{2 \pi N} = \frac{u_t \cdot \text{MRR}}{2 \pi N
 \section*{Question 7}
 
 \begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0.8em, topsep=0.5em]
-\item a
-\edef\pLamp{\fp}
-$ p_\text{lamp} = \frac{\rho h C_p}{a t_\text{heat}} \Delta T = \frac{\qty{1200}{\frac{kg}{m^3}} \cdot \qty{0.0005}{m} \cdot \qty{1200}{\frac{J}{kg \cdot K}}}{0.8 \cdot \qty{2}{s}} \cdot \qty{250}{K} =  $
+\item
+\edef\pLamp{\fpeval{1200 * 0.0005 * 1200 /(0.8 * 2) * 250}}
+$ p_\text{lamp} = \frac{\rho h C_p}{a t_\text{heat}} \Delta T = \frac{\qty{1200}{\frac{kg}{m^3}} \cdot \qty{0.0005}{m} \cdot \qty{1200}{\frac{J}{kg \cdot K}}}{0.8 \times \qty{2}{s}} \cdot \qty{250}{K} = \qty[round-mode=places, round-precision=0]{\pLamp}{\frac{W}{m^2}} = \qty{\fpeval{\pLamp/1000}}{\frac{W}{m^2}}$
 
-\item b
+\item
+$ v = \frac{L}{t} = \frac{\qty{0.5}{m}}{\qty{2}{s}} = \qty{0.25}{\frac{m}{s}} = \qty{15}{\frac{m}{min}}$
 \end{enumerate}
 \clearpage
 \end{document}
